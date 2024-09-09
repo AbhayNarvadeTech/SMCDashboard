@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap Collapsible Sidebar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Rotate caret icon when collapsed */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+        .rotate-icon {
+            transition: transform 0.3s;
+        }
+
+        .rotate-icon.rotate {
+            transform: rotate(180deg);
+        }
+
+        #navbar {
+            background-color: #291F5D;
+        }
+
+        .usertype{
+            margin-left: 15px;
+        }
+        .uppernavbaricon {
+            background-color: #291F5D;
+            color: aliceblue;
+        }
+
+        .uppernavbaricon :hover {
+            color: aliceblue;
+        }
+
+        .sidebarbody {
+            background-color: #DDE5FE;
+            /* color: #9ea2af;  */
+        }
+
+        .offcanvas-header {
+            background-color: #291F5D;
+        }
+
+        .nav-item {
+            color: black;
+
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: #11101D;
+        }
+
+        .list-unstyled {
+            background-color: #f3f3f3;
+        }
+
+        .list-unstyled li {
+            padding: 5px;
+        }
+
+        body {
+            background-color: #EFEFEF;
+            font-family: "Noto Sans", sans-serif;
+        }
+
+        /* for Content-writer */
+        #Content-writer {
+            /* border: 1px solid #11101D; */
+            border-radius: 25px;
+            background-color: white;
+            height: 8vh;
+            width: 100%;
+        }
+
+        #Content-writer div {
+            justify-content: space-between;
+        }
+
+        @media (max-width : 1051px) {
+            #Content-writer {
+                height: 12vh;
+            }
+
+            #Content-writer div {
+                justify-content: center !important;
+            }
+        }
+
+        @media (max-width : 1018px) {
+            #Content-writer {
+                height: 10vh;
+            }
+
+            #Content-writer div {
+                justify-content: center !important;
+            }
+        }
+
+        @media (max-width : 1018px) {
+            #Content-writer {
+                height: 10vh;
+            }
+
+            #Content-writer div {
+                justify-content: center !important;
+            }
+        }
+
+        @media (max-width: 520px) {
+            #Content-writer {
+                height: auto;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                /* Adjust height for more content */
+            }
+
+            #Content-writer div {
+                flex-direction: column;
+            }
+
+            #Content-writer div .seconddiv {
+                width: 90%;
+            }
+        }
+
+
+        #Urgent {
+            background-color: #DC0030;
+        }
+
+        #Changes {
+            background-color: #F71C60;
+        }
+
+        #Rewrite {
+            background-color: #FF577B;
+        }
+
+        #Reassigned {
+            background-color: #3198D5;
+        }
+
+        #Today {
+            background-color: #2C72CA;
+        }
+
+        #Inreview {
+            background-color: #3C3F98;
+        }
+
+        #Approvedbyhead {
+            background-color: #7FC259;
+        }
+
+        #Sendtoclient {
+            background-color: #BDD597;
+        }
+
+        #Finaldone {
+            background-color: #358E30;
+        }
+
+        #Advanced {
+            background-color: #F48E1F;
+        }
+
+        #Hold {
+            background-color: #ECBE06;
+        }
+
+        #All {
+            background-color: #0D858E;
+        }
+
+        #dashboardbuttons {
+            border-radius: 25px;
+            background-color: white;
+            height: auto;
+            width: 100%;
+        }
+
+        #ticketinDashboard {
+            border-radius: 25px;
+            background-color: #D5D6E2;
+            height: auto;
+            width: 100%;
+        }
+
+        #dashboardbuttons div {
+            justify-content: flex-start;
+        }
+
+        #ticketinDashboard div {
+            justify-content: flex-start;
+        }
+
+        .buttonofdashboard {
+            height: 120px;
+            width: 206px;
+            border-radius: 25px;
+        }
+
+        .urgent-count {
+            position: relative;
+            top: 0.8rem;
+            left: 4.5rem;
+            font-size: 35px;
+        }
+
+        .approved-count {
+            position: relative;
+            bottom: 0.8rem;
+            left: 4.5rem;
+            font-size: 35px;
+        }
+
+        #Approvedbyhead>.buttonunderline {
+            position: relative;
+            bottom: 1.8rem;
+        }
+
+        .buttonunderline {
+            height: 8px;
+            border-radius: 19px;
+            background-color: #DDE5FE;
+        }
+
+        .ticket {
+            background: linear-gradient(to top, #ffff 65%, #0D858E 35%);
+            width: 220px;
+            border-radius: 30px;
+            height: 200px;
+        }
+
+        #ticket-btn {
+            width: 100%;
+        }
+
+        .button-image {
+            height: 60px;
+            width: 60px;
+            border-radius: 35px;
+            object-fit: cover;
+            position: relative;
+            left: 0;
+            top: 0rem;
+        }
+
+        @media (max-width : 1454px) {
+            .buttonofdashboard {
+                height: 120px;
+                width: 203px;
+
+            }
+
+            .ticket {
+                height: auto;
+                width: 203px !important;
+            }
+
+            .button-image {
+                height: 50px;
+                width: 50px;
+                top: -0.2rem;
+            }
+        }
+
+        @media (max-width : 1438px) {
+            .buttonofdashboard {
+                height: 120px;
+                width: 201px;
+
+            }
+
+            .ticket {
+                height: auto;
+                width: 201px !important;
+            }
+        }
+
+        @media (max-width : 1438px) {
+            .buttonofdashboard {
+                margin: 10px !important;
+            }
+
+            .ticket {
+                margin: 10px !important;
+            }
+        }
+
+        @media (max-width : 1366px) {
+            .buttonofdashboard {
+                height: 120px;
+                width: 194px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 194px !important;
+            }
+        }
+
+        @media (max-width : 1324px) {
+            .buttonofdashboard {
+                height: 120px;
+                width: 188px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 188px !important;
+            }
+        }
+
+        @media (max-width : 1056px) {
+            .buttonofdashboard {
+                height: 120px;
+                width: 205px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 205px !important;
+            }
+        }
+
+        @media (max-width : 934px) {
+            .buttonofdashboard {
+                height: 120px;
+                width: 195px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 195px !important;
+            }
+        }
+
+        @media (max-width : 896px) {
+            .buttonofdashboard {
+                height: 133px;
+                width: 250px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 250px !important;
+            }
+
+            #Approvedbyhead>.buttonunderline {
+                position: relative;
+                bottom: 0;
+            }
+
+            .approved-count {
+                position: relative;
+                top: 0.8rem;
+                left: 4.5rem;
+                font-size: 35px;
+            }
+
+        }
+
+        @media (max-width : 850px) {
+            .buttonofdashboard {
+                height: 133px;
+                width: 218px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 218px !important;
+            }
+        }
+
+        @media (max-width : 740px) {
+            .buttonofdashboard {
+                height: 153px;
+                width: 280px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 280px !important;
+            }
+        }
+
+        @media (max-width : 640px) {
+            .buttonofdashboard {
+                height: 153px;
+                width: 250px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 250px !important;
+            }
+        }
+
+        @media (max-width : 580px) {
+            .buttonofdashboard {
+                height: 153px;
+                width: 220px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 220px !important;
+            }
+        }
+
+        @media (max-width : 520px) {
+            .buttonofdashboard {
+                height: 153px;
+                width: 206px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 206px !important;
+            }
+        }
+
+        @media (max-width : 492px) {
+            .buttonofdashboard {
+                height: 153px;
+                width: 190px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 190px !important;
+            }
+        }
+
+        @media (max-width : 460px) {
+            .buttonofdashboard {
+                height: 153px;
+                width: 174px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 174px !important;
+            }
+
+            .urgent-count {
+                left: 3rem;
+            }
+
+            .approved-count {
+                left: 3rem;
+            }
+        }
+
+        @media (max-width : 428px) {
+            .buttonofdashboard {
+                height: 158px;
+                width: 161px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 161px !important;
+            }
+        }
+
+        @media (max-width : 401px) {
+            .buttonofdashboard {
+                height: 158px;
+                width: 250px;
+            }
+
+            .ticket {
+                height: auto;
+                width: 250px !important;
+            }
+
+            #dashboardbuttons div {
+                justify-content: center;
+            }
+
+            #ticketinDashboard div {
+                justify-content: center;
+            }
+
+            .urgent-count {
+                left: 5rem;
+            }
+
+            .approved-count {
+                left: 5rem;
+            }
+        }
+
+
+
+        /* Content-writer stop */
+
+        @media (max-width : 340px) {
+            #Username {
+                font-size: medium;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar with toggle button for offcanvas -->
+    <nav class="navbar navbar-expand-lg navbar-dark " id="navbar">
+        <div class="container-fluid">
+            <button class="btn   me-2 uppernavbaricon" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <a class="navbar-brand me-auto" href="#" id="Username">Abhay Narvade (Super Admin)</a>
+
+            <div class="d-flex">
+                <button class="btn  me-2 uppernavbaricon">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+                <button class="btn  me-2 uppernavbaricon">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+                <a class="navbar-brand" href="#">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-start sidebarbody " tabindex="-1" id="offcanvasSidebar"
+        aria-labelledby="offcanvasSidebarLabel">
+        <div class="offcanvas-header text-white">
+            <h2 class="offcanvas-title" id="offcanvasSidebarLabel">Ad Hub</h2>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <!-- Report Section -->
+                <li class="nav-item">
+                    <a class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+                        href="#collapseReport" role="button" aria-expanded="false" aria-controls="collapseReport">
+                        <span><i class="fa-solid fa-chart-line me-4"></i> Reports</span>
+                        <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+                    </a>
+                    <div class="collapse" id="collapseReport">
+                        <ul class="list-unstyled ps-3">
+                            <li><a href="#" class="">Daily Report</a></li>
+                            <li><a href="#" class="">Weekly Report</a></li>
+                            <li><a href="#" class="">Monthly Report</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Checklist Section -->
+                <li class="nav-item">
+                    <a class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+                        href="#collapseChecklist" role="button" aria-expanded="false" aria-controls="collapseChecklist">
+                        <span><i class="fa-solid fa-list-check me-4"></i> Checklist</span>
+                        <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+                    </a>
+                    <div class="collapse" id="collapseChecklist">
+                        <ul class="list-unstyled ps-3">
+                            <li><a href="#" class="">Daily Tasks</a></li>
+                            <li><a href="#" class="">Weekly Tasks</a></li>
+                            <li><a href="#" class="">Project Milestones</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- My Video Section -->
+                <li class="nav-item">
+                    <a class="nav-link  d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+                        href="#collapseVideos" role="button" aria-expanded="false" aria-controls="collapseVideos">
+                        <span><i class="fa-solid fa-video me-4"></i> My Video Section</span>
+                        <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+                    </a>
+                    <div class="collapse" id="collapseVideos">
+                        <ul class="list-unstyled ps-3">
+                            <li><a href="#" class="">Uploaded Videos</a></li>
+                            <li><a href="#" class="">Video Analytics</a></li>
+                            <li><a href="#" class="">Manage Videos</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link  d-flex justify-content-between align-items-center" role="button"
+                        aria-expanded="false" aria-controls="collapseVideos" href="check">
+                        <span><i class="fa-solid fa-video me-4"></i> My Video Section</span>
+                    </a>
+
+        </div>
+        </li>
+        </ul>
+    </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="container-fluid mt-4">
+        <div class="row flex-wrap justify-content-center align-items-center px-2">
+            <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="Content-writer">
+                <div class="d-flex flex-wrap align-items-center h-100">
+                    <div class="d-flex">
+                        <span class="usertype">Content Writer</span>
+                    </div>
+                    <div class="d-flex seconddiv gap-2">
+                        <select class="form-select shadow-none" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+
+                        <select class="form-select shadow-none" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+
+                        <select class="form-select shadow-none" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+
+                        <select class="form-select shadow-none" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row flex-wrap justify-content-center align-items-center my-2 px-2">
+            <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="dashboardbuttons">
+                <div class="d-flex flex-wrap  align-items-center h-100 py-4">
+
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Urgent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">Urgent</span>
+                            <span><i class="fas fa-exclamation-circle"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Changes">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">Changes</span>
+                            <span><i class="fas fa-sync-alt fa-spin"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Rewrite">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">Rewrite</span>
+                            <span><i class="fas fa-random" style="font-size:22px"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Reassigned">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">Reassigned</span>
+                            <span><i class="fas fa fa-upload"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Today">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">Today</span>
+                            <span><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Inreview">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">In Review</span>
+                            <span><i class="fa-solid fa-check-to-slot"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Approvedbyhead">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span class="text-start" style="font-size: larger;">Approved by Head</span>
+                            <span><i class="fas fa-user-check"></i></span>
+                        </div>
+                        <span class="approved-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Sendtoclient">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">Send to Client</span>
+                            <span><i class="fa-regular fa-thumbs-up"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Finaldone">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">Final Done</span>
+                            <span><i class="fas fa-check-circle"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Advanced">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">Advanced</span>
+                            <span><i class="fas fa-arrow-up"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="Hold">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">Hold</span>
+                            <span><i class="fas fa-pause"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                    <button class="btn buttonofdashboard text-white mx-3 my-2" id="All">
+                        <div class="d-flex justify-content-between mt-2">
+                            <span style="font-size: larger;">All</span>
+                            <span><i class="fa fa-arrows"></i></span>
+                        </div>
+                        <span class="urgent-count">5</span>
+                        <div class="buttonunderline my-2  "></div>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row flex-wrap justify-content-center align-items-center my-2 px-2">
+            <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="ticketinDashboard">
+                <div class="d-flex flex-wrap  align-items-center h-100 py-4">
+
+                    <a href="" class="mx-3 my-2 ticket">
+                        <button class="btn ticket-btn text-dark  ">
+                            <img src="gaeneshji.jpg" alt="" class="button-image">
+                            <div>
+
+                                23-08-2024
+                                <br>
+                                1420
+                                <br>
+                                Shiveneri Amrutul jkhjkhjkhjkjjkhjkhj
+                            </div>
+                        </button>
+                    </a>
+                    <a href="" class="mx-3 my-2 ticket">
+                        <button class="btn ticket-btn text-dark  ">
+                            <img src="gaeneshji.jpg" alt="" class="button-image">
+                            <div>
+
+                                23-08-2024
+                                <br>
+                                1420
+                                <br>
+                                Shiveneri Amrutul jkhjkhjkhjkjjkhjkhj
+                            </div>
+                        </button>
+                    </a>
+                    <a href="" class="mx-3 my-2 ticket">
+                        <button class="btn ticket-btn text-dark  ">
+                            <img src="gaeneshji.jpg" alt="" class="button-image">
+                            <div>
+
+                                23-08-2024
+                                <br>
+                                1420
+                                <br>
+                                Shiveneri Amrutul jkhjkhjkhjkjjkhjkhj
+                            </div>
+                        </button>
+                    </a>
+                    <a href="" class="mx-3 my-2 ticket">
+                        <button class="btn ticket-btn text-dark  ">
+                            <img src="gaeneshji.jpg" alt="" class="button-image">
+                            <div>
+
+                                23-08-2024
+                                <br>
+                                1420
+                                <br>
+                                Shiveneri Amrutul jkhjkhjkhjkjjkhjkhj
+                            </div>
+                        </button>
+                    </a>
+                    <a href="" class="mx-3 my-2 ticket">
+                        <button class="btn ticket-btn text-dark  ">
+                            <img src="gaeneshji.jpg" alt="" class="button-image">
+                            <div>
+
+                                23-08-2024
+                                <br>
+                                1420
+                                <br>
+                                Shiveneri Amrutul jkhjkhjkhjkjjkhjkhj
+                            </div>
+                        </button>
+                    </a>
+                    <a href="" class="mx-3 my-2 ticket">
+                        <button class="btn ticket-btn text-dark  ">
+                            <img src="gaeneshji.jpg" alt="" class="button-image">
+                            <div>
+
+                                23-08-2024
+                                <br>
+                                1420
+                                <br>
+                                Shiveneri Amrutul jkhjkhjkhjkjjkhjkhj
+                            </div>
+                        </button>
+                    </a>
+                    <a href="" class="mx-3 my-2 ticket">
+                        <button class="btn ticket-btn text-dark  ">
+                            <img src="gaeneshji.jpg" alt="" class="button-image">
+                            <div>
+
+                                23-08-2024
+                                <br>
+                                1420
+                                <br>
+                                Shiveneri Amrutul jkhjkhjkhjkjjkhjkhj
+                            </div>
+                        </button>
+                    </a>
+                    <a href="" class="mx-3 my-2 ticket">
+                        <button class="btn ticket-btn text-dark  ">
+                            <img src="gaeneshji.jpg" alt="" class="button-image">
+                            <div>
+
+                                23-08-2024
+                                <br>
+                                1420
+                                <br>
+                                Shiveneri Amrutul jkhjkhjkhjkjjkhjkhj
+                            </div>
+                        </button>
+                    </a>
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // JavaScript to rotate caret icon when collapse is shown or hidden
+        document
+            .querySelectorAll('.nav-link[data-bs-toggle="collapse"]')
+            .forEach((link) => {
+                link.addEventListener("click", function () {
+                    const icon = this.querySelector(".rotate-icon");
+                    const collapse = document.querySelector(this.getAttribute("href"));
+
+                    collapse.addEventListener("show.bs.collapse", () => {
+                        icon.classList.add("rotate");
+                    });
+
+                    collapse.addEventListener("hide.bs.collapse", () => {
+                        icon.classList.remove("rotate");
+                    });
+                });
+            });
+    </script>
+</body>
+
+</html>
