@@ -1,2146 +1,1955 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap Collapsible Sidebar</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bootstrap Collapsible Sidebar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      /* Rotate caret icon when collapsed */
-      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-      .rotate-icon {
-        transition: transform 0.3s;
-      }
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <style>
+    /* Rotate caret icon when collapsed */
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
-      .rotate-icon.rotate {
-        transform: rotate(180deg);
-      }
+    .sidebarbody .nav-item .nav-link {
+      display: flex;
+      /* Flex layout to control alignment */
+      align-items: center;
+      /* Center the items vertically */
+      justify-content: space-between;
+      /* Even spacing between elements */
+      padding: 10px 20px;
+      /* Adjust padding for consistent spacing */
+      color: #000;
+      /* Text color */
+      text-decoration: none;
+      /* Remove underline */
+      margin-bottom: 5px;
+      /* Space between nav items */
+      transition: background-color 0.2s;
+      /* Hover effect transition */
+    }
 
-      #navbar {
-        background-color: #291f5d;
-      }
+    .sidebarbody .nav-item .nav-link span {
+      display: flex;
+      /* Flex layout for span */
+      align-items: center;
+      /* Center content vertically */
+      width: 180px;
+      /* Set a fixed width for consistent spacing */
+    }
 
-      .usertype {
-        margin-left: 15px;
-      }
+    .sidebarbody .nav-item .nav-link i {
+      margin-right: 15px;
+      /* Space between icon and text */
+      font-size: 18px;
+      /* Icon size */
+    }
 
-      .uppernavbaricon {
-        background-color: #291f5d;
-        color: aliceblue;
-      }
+    .sidebarbody .collapse .list-unstyled li a {
+      padding: 8px 40px;
+      /* Adjust padding for sub-items */
+      display: flex;
+      /* Flex layout for sub-items */
+      align-items: center;
+      /* Center items vertically */
+      color: #000;
+      /* Text color */
+      text-decoration: none;
+      /* Remove underline */
+    }
 
-      .uppernavbaricon :hover {
-        color: aliceblue;
-      }
+    .sidebarbody .collapse .list-unstyled li a span {
+      width: 180px;
+      /* Set the same fixed width for sub-items */
+    }
 
-      .sidebarbody {
-        background-color: #dde5fe;
-        /* color: #9ea2af;  */
-      }
+    .sidebarbody .collapse .list-unstyled li a:hover {
+      background-color: #1a1a2e;
+      /* Change background on hover for sub-items */
+      color: #ffffff;
+      /* Text color on hover */
+    }
 
-      .offcanvas-header {
-        background-color: #291f5d;
-      }
+    .rotate-icon {
+      transition: transform 0.2s;
+      /* Rotate transition */
+    }
 
-      .nav-item {
-        color: black;
-      }
+    .down-arraow {
+      margin-left: auto;
+      /* Push arrow to the right */
+    }
 
-      .nav-item a {
-        text-decoration: none;
-        color: #11101d;
-      }
 
-      .list-unstyled {
-        background-color: #f3f3f3;
-      }
 
-      .list-unstyled li {
-        padding: 5px;
-      }
+    .rotate-icon {
+      transition: transform 0.3s;
+    }
 
-      body {
-        background-color: #efefef;
-        font-family: "Noto Sans", sans-serif;
-      }
+    .rotate-icon.rotate {
+      transform: rotate(180deg);
+    }
 
-      /* for Content-writer */
+    #navbar {
+      background-color: #291f5d;
+    }
+
+    .usertype {
+      margin-left: 15px;
+    }
+
+    .uppernavbaricon {
+      background-color: #291f5d;
+      color: aliceblue;
+    }
+
+    .uppernavbaricon :hover {
+      color: aliceblue;
+    }
+
+    .sidebarbody {
+      background-color: #dde5fe;
+      /* color: #9ea2af;  */
+    }
+
+    .offcanvas-header {
+      background-color: #291f5d;
+    }
+
+    .nav-item {
+      color: black;
+    }
+
+    .nav-item a {
+      text-decoration: none;
+      color: #11101d;
+    }
+
+    .list-unstyled {
+      background-color: #f3f3f3;
+    }
+
+    .list-unstyled li {
+      padding: 5px;
+    }
+
+    body {
+      background-color: #efefef;
+      font-family: "Noto Sans", sans-serif;
+    }
+
+    /* for Content-writer */
+    #Content-writer {
+      /* border: 1px solid #11101D; */
+      border-radius: 25px;
+      background-color: white;
+      height: 8vh;
+      width: 100%;
+    }
+
+    #Content-writer div {
+      justify-content: space-between;
+    }
+
+    @media (max-width: 1051px) {
       #Content-writer {
-        /* border: 1px solid #11101D; */
-        border-radius: 25px;
-        background-color: white;
-        height: 8vh;
-        width: 100%;
+        height: 12vh;
       }
 
       #Content-writer div {
-        justify-content: space-between;
+        justify-content: center !important;
+      }
+    }
+
+    @media (max-width: 1018px) {
+      #Content-writer {
+        height: 10vh;
       }
 
-      @media (max-width: 1051px) {
-        #Content-writer {
-          height: 12vh;
-        }
+      #Content-writer div {
+        justify-content: center !important;
+      }
+    }
 
-        #Content-writer div {
-          justify-content: center !important;
-        }
+    @media (max-width: 1018px) {
+      #Content-writer {
+        height: 10vh;
       }
 
-      @media (max-width: 1018px) {
-        #Content-writer {
-          height: 10vh;
-        }
-
-        #Content-writer div {
-          justify-content: center !important;
-        }
+      #Content-writer div {
+        justify-content: center !important;
       }
+    }
 
-      @media (max-width: 1018px) {
-        #Content-writer {
-          height: 10vh;
-        }
-
-        #Content-writer div {
-          justify-content: center !important;
-        }
-      }
-
-      @media (max-width: 520px) {
-        #Content-writer {
-          height: auto;
-          padding-top: 15px;
-          padding-bottom: 15px;
-          /* Adjust height for more content */
-        }
-
-        #Content-writer div {
-          flex-direction: column;
-        }
-
-        #Content-writer div .seconddiv {
-          width: 90%;
-        }
-      }
-
-      #Urgent {
-        background-color: #dc0030;
-      }
-
-      #Changes {
-        background-color: #f71c60;
-      }
-
-      #Rewrite {
-        background-color: #ff577b;
-      }
-
-      #Reassigned {
-        background-color: #3198d5;
-      }
-
-      #Today {
-        background-color: #2c72ca;
-      }
-
-      #Inreview {
-        background-color: #3c3f98;
-      }
-
-      #Approvedbyhead {
-        background-color: #7fc259;
-      }
-
-      #Sendtoclient {
-        background-color: #bdd597;
-      }
-
-      #Finaldone {
-        background-color: #358e30;
-      }
-
-      #Advanced {
-        background-color: #f48e1f;
-      }
-
-      #Hold {
-        background-color: #ecbe06;
-      }
-
-      #All {
-        background-color: #0d858e;
-      }
-
-      #Urgent-gr {
-        background-color: #dc0030;
-      }
-
-      #Changes-gr {
-        background-color: #f71c60;
-      }
-
-      #Redesign-gr {
-        background-color: #ff577b;
-      }
-
-      #Reassigned-gr {
-        background-color: #3198d5;
-      }
-
-      #Today-gr {
-        background-color: #2c72ca;
-      }
-
-      #Inreview-gr {
-        background-color: #3c3f98;
-      }
-
-      #Approvedbyhead-gr {
-        background-color: #7fc259;
-      }
-
-      #Sendtoclient-gr {
-        background-color: #bdd597;
-      }
-
-      #Finaldone-gr {
-        background-color: #358e30;
-      }
-
-      #Advanced-gr {
-        background-color: #f48e1f;
-      }
-
-      #Hold-gr {
-        background-color: #ecbe06;
-      }
-
-      #All-gr {
-        background-color: #0d858e;
-      }
-
-      #Priority-smm {
-        background-color: #dc0030;
-      }
-
-      #Cr-Changes-smm {
-        background-color: #f71c60;
-      }
-
-      #Gr-Changes-smm {
-        background-color: #ff577b;
-      }
-
-      #Today-smm {
-        background-color: #358e30;
-      }
-
-      #System-smm {
-        background-color: #7fc259;
-      }
-
-      #Advanced-smm {
-        background-color: #f48e1f;
-      }
-
-      #Manual-smm {
-        background-color: #ecbe06;
-      }
-
-      #Sendtoclient-smm {
-        background-color: #0d858e;
-      }
-
-      #dashboardbuttons {
-        border-radius: 25px;
-        background-color: white;
+    @media (max-width: 520px) {
+      #Content-writer {
         height: auto;
-        width: 100%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        /* Adjust height for more content */
       }
 
-      #dashboardbuttonsgr {
-        border-radius: 25px;
-        background-color: white;
-        height: auto;
-        width: 100%;
+      #Content-writer div {
+        flex-direction: column;
       }
 
-      #ticketinDashboard {
-        border-radius: 25px;
-        background-color: #d5d6e2;
-        height: auto;
-        width: 100%;
+      #Content-writer div .seconddiv {
+        width: 90%;
       }
+    }
 
-      #dashboardbuttons div {
-        justify-content: flex-start;
-      }
+    #Urgent {
+      background-color: #dc0030;
+    }
 
-      #dashboardbuttonsgr div {
-        justify-content: flex-start;
-      }
+    #Changes {
+      background-color: #f71c60;
+    }
 
-      #ticketinDashboard div {
-        justify-content: flex-start;
-      }
+    #Rewrite {
+      background-color: #ff577b;
+    }
 
+    #Reassigned {
+      background-color: #3198d5;
+    }
+
+    #Today {
+      background-color: #2c72ca;
+    }
+
+    #Inreview {
+      background-color: #3c3f98;
+    }
+
+    #Approvedbyhead {
+      background-color: #7fc259;
+    }
+
+    #Sendtoclient {
+      background-color: #bdd597;
+    }
+
+    #Finaldone {
+      background-color: #358e30;
+    }
+
+    #Advanced {
+      background-color: #f48e1f;
+    }
+
+    #Hold {
+      background-color: #ecbe06;
+    }
+
+    #All {
+      background-color: #0d858e;
+    }
+
+    #Urgent-gr {
+      background-color: #dc0030;
+    }
+
+    #Changes-gr {
+      background-color: #f71c60;
+    }
+
+    #Redesign-gr {
+      background-color: #ff577b;
+    }
+
+    #Reassigned-gr {
+      background-color: #3198d5;
+    }
+
+    #Today-gr {
+      background-color: #2c72ca;
+    }
+
+    #Inreview-gr {
+      background-color: #3c3f98;
+    }
+
+    #Approvedbyhead-gr {
+      background-color: #7fc259;
+    }
+
+    #Sendtoclient-gr {
+      background-color: #bdd597;
+    }
+
+    #Finaldone-gr {
+      background-color: #358e30;
+    }
+
+    #Advanced-gr {
+      background-color: #f48e1f;
+    }
+
+    #Hold-gr {
+      background-color: #ecbe06;
+    }
+
+    #All-gr {
+      background-color: #0d858e;
+    }
+
+    #Priority-smm {
+      background-color: #dc0030;
+    }
+
+    #Cr-Changes-smm {
+      background-color: #f71c60;
+    }
+
+    #Gr-Changes-smm {
+      background-color: #ff577b;
+    }
+
+    #Today-smm {
+      background-color: #358e30;
+    }
+
+    #System-smm {
+      background-color: #7fc259;
+    }
+
+    #Advanced-smm {
+      background-color: #f48e1f;
+    }
+
+    #Manual-smm {
+      background-color: #ecbe06;
+    }
+
+    #Sendtoclient-smm {
+      background-color: #0d858e;
+    }
+
+    #dashboardbuttons {
+      border-radius: 25px;
+      background-color: white;
+      height: auto;
+      width: 100%;
+    }
+
+    #dashboardbuttonsgr {
+      border-radius: 25px;
+      background-color: white;
+      height: auto;
+      width: 100%;
+    }
+
+    #ticketinDashboard {
+      border-radius: 25px;
+      background-color: #d5d6e2;
+      height: auto;
+      width: 100%;
+    }
+
+    #dashboardbuttons div {
+      justify-content: flex-start;
+    }
+
+    #dashboardbuttonsgr div {
+      justify-content: flex-start;
+    }
+
+    #ticketinDashboard div {
+      justify-content: flex-start;
+    }
+
+    .buttonofdashboard {
+      height: 120px;
+      width: 206px;
+      border-radius: 25px;
+    }
+
+    .urgent-count {
+      position: relative;
+      top: 0.8rem;
+      left: 4.5rem;
+      font-size: 35px;
+    }
+
+    .approved-count {
+      position: relative;
+      bottom: 0.8rem;
+      left: 4.5rem;
+      font-size: 35px;
+    }
+
+    #Approvedbyhead>.buttonunderline {
+      position: relative;
+      bottom: 1.8rem;
+    }
+
+    #Approvedbyhead-gr>.buttonunderline {
+      position: relative;
+      bottom: 1.8rem;
+    }
+
+    .buttonunderline {
+      height: 8px;
+      border-radius: 19px;
+      background-color: white;
+    }
+
+    .ticket {
+      background-color: white;
+      width: 220px;
+      border-radius: 30px;
+      height: auto;
+      padding: 0;
+      /* Ensure no padding around content */
+      overflow: hidden;
+      /* Clip content that overflows */
+    }
+
+    .ticket-btn {
+      width: 100%;
+      height: 100%;
+      /* Make the button take full height */
+      border: none;
+      /* Remove default button border */
+      padding: 0;
+      /* Remove default padding */
+    }
+
+    .ticketimage {
+      background-color: #0d858e;
+      width: 100%;
+      height: 100px;
+      /* Set height for the image section */
+      display: flex;
+      /* Center content */
+      justify-content: center;
+      /* Center content horizontally */
+      align-items: center;
+      /* Center content vertically */
+    }
+
+    .button-image {
+      height: 60px;
+      width: 60px;
+      border-radius: 35px;
+      object-fit: cover;
+    }
+
+    @media (max-width: 1454px) {
       .buttonofdashboard {
         height: 120px;
-        width: 206px;
-        border-radius: 25px;
+        width: 203px;
       }
 
-      .urgent-count {
+      .ticket {
+        height: auto;
+        width: 203px !important;
+      }
+
+      /* .button-image {
+                height: 50px;
+                width: 50px;
+                top: -0.2rem;
+            } */
+    }
+
+    @media (max-width: 1438px) {
+      .buttonofdashboard {
+        height: 120px;
+        width: 201px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 201px !important;
+      }
+    }
+
+    @media (max-width: 1438px) {
+      .buttonofdashboard {
+        margin: 10px !important;
+      }
+
+      .ticket {
+        margin: 10px !important;
+      }
+    }
+
+    @media (max-width: 1366px) {
+      .buttonofdashboard {
+        height: 120px;
+        width: 194px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 194px !important;
+      }
+    }
+
+    @media (max-width: 1324px) {
+      .buttonofdashboard {
+        height: 120px;
+        width: 188px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 188px !important;
+      }
+    }
+
+    @media (max-width: 1056px) {
+      .buttonofdashboard {
+        height: 120px;
+        width: 205px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 205px !important;
+      }
+    }
+
+    @media (max-width: 934px) {
+      .buttonofdashboard {
+        height: 120px;
+        width: 195px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 195px !important;
+      }
+    }
+
+    @media (max-width: 896px) {
+      .buttonofdashboard {
+        height: 133px;
+        width: 250px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 250px !important;
+      }
+
+      #Approvedbyhead>.buttonunderline {
+        position: relative;
+        bottom: 0;
+      }
+
+      #Approvedbyhead-gr>.buttonunderline {
+        position: relative;
+        bottom: 0;
+      }
+
+      .approved-count {
         position: relative;
         top: 0.8rem;
         left: 4.5rem;
         font-size: 35px;
       }
+    }
 
-      .approved-count {
-        position: relative;
-        bottom: 0.8rem;
-        left: 4.5rem;
-        font-size: 35px;
-      }
-
-      #Approvedbyhead > .buttonunderline {
-        position: relative;
-        bottom: 1.8rem;
-      }
-
-      #Approvedbyhead-gr > .buttonunderline {
-        position: relative;
-        bottom: 1.8rem;
-      }
-
-      .buttonunderline {
-        height: 8px;
-        border-radius: 19px;
-        background-color: white;
+    @media (max-width: 850px) {
+      .buttonofdashboard {
+        height: 133px;
+        width: 218px;
       }
 
       .ticket {
-        background-color: white;
-        width: 220px;
-        border-radius: 30px;
         height: auto;
-        padding: 0;
-        /* Ensure no padding around content */
-        overflow: hidden;
-        /* Clip content that overflows */
+        width: 218px !important;
+      }
+    }
+
+    @media (max-width: 740px) {
+      .buttonofdashboard {
+        height: 153px;
+        width: 280px;
       }
 
-      .ticket-btn {
-        width: 100%;
-        height: 100%;
-        /* Make the button take full height */
-        border: none;
-        /* Remove default button border */
-        padding: 0;
-        /* Remove default padding */
+      .ticket {
+        height: auto;
+        width: 280px !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .buttonofdashboard {
+        height: 153px;
+        width: 250px;
       }
 
-      .ticketimage {
-        background-color: #0d858e;
-        width: 100%;
-        height: 100px;
-        /* Set height for the image section */
-        display: flex;
-        /* Center content */
+      .ticket {
+        height: auto;
+        width: 250px !important;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .buttonofdashboard {
+        height: 153px;
+        width: 220px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 220px !important;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .buttonofdashboard {
+        height: 153px;
+        width: 206px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 206px !important;
+      }
+    }
+
+    @media (max-width: 492px) {
+      .buttonofdashboard {
+        height: 153px;
+        width: 190px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 190px !important;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .buttonofdashboard {
+        height: 153px;
+        width: 174px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 174px !important;
+      }
+
+      .urgent-count {
+        left: 3rem;
+      }
+
+      .approved-count {
+        left: 3rem;
+      }
+    }
+
+    @media (max-width: 428px) {
+      .buttonofdashboard {
+        height: 158px;
+        width: 161px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 161px !important;
+      }
+    }
+
+    @media (max-width: 401px) {
+      .buttonofdashboard {
+        height: 158px;
+        width: 250px;
+      }
+
+      .ticket {
+        height: auto;
+        width: 250px !important;
+      }
+
+      #dashboardbuttons div {
         justify-content: center;
-        /* Center content horizontally */
-        align-items: center;
-        /* Center content vertically */
       }
 
-      .button-image {
-        height: 60px;
-        width: 60px;
-        border-radius: 35px;
-        object-fit: cover;
+      #dashboardbuttonsgr div {
+        justify-content: center;
       }
 
-      @media (max-width: 1454px) {
-        .buttonofdashboard {
-          height: 120px;
-          width: 203px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 203px !important;
-        }
-
-        /* .button-image {
-                height: 50px;
-                width: 50px;
-                top: -0.2rem;
-            } */
+      #ticketinDashboard div {
+        justify-content: center;
       }
 
-      @media (max-width: 1438px) {
-        .buttonofdashboard {
-          height: 120px;
-          width: 201px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 201px !important;
-        }
+      .urgent-count {
+        left: 5rem;
       }
 
-      @media (max-width: 1438px) {
-        .buttonofdashboard {
-          margin: 10px !important;
-        }
-
-        .ticket {
-          margin: 10px !important;
-        }
+      .approved-count {
+        left: 5rem;
       }
+    }
 
-      @media (max-width: 1366px) {
-        .buttonofdashboard {
-          height: 120px;
-          width: 194px;
-        }
+    /* Content-writer stop */
 
-        .ticket {
-          height: auto;
-          width: 194px !important;
-        }
+    @media (max-width: 340px) {
+      #Username {
+        font-size: medium;
       }
+    }
+  </style>
+</head>
 
-      @media (max-width: 1324px) {
-        .buttonofdashboard {
-          height: 120px;
-          width: 188px;
-        }
+<body>
+  <!-- Navbar with toggle button for offcanvas -->
+  <nav class="navbar navbar-expand-lg navbar-dark" id="navbar">
+    <div class="container-fluid">
+      <button class="btn me-2 uppernavbaricon" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+        <i class="fa-solid fa-bars"></i>
+      </button>
 
-        .ticket {
-          height: auto;
-          width: 188px !important;
-        }
-      }
+      <a class="navbar-brand me-auto" href="#" id="Username">Abhay Narvade (Super Admin)</a>
 
-      @media (max-width: 1056px) {
-        .buttonofdashboard {
-          height: 120px;
-          width: 205px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 205px !important;
-        }
-      }
-
-      @media (max-width: 934px) {
-        .buttonofdashboard {
-          height: 120px;
-          width: 195px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 195px !important;
-        }
-      }
-
-      @media (max-width: 896px) {
-        .buttonofdashboard {
-          height: 133px;
-          width: 250px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 250px !important;
-        }
-
-        #Approvedbyhead > .buttonunderline {
-          position: relative;
-          bottom: 0;
-        }
-
-        #Approvedbyhead-gr > .buttonunderline {
-          position: relative;
-          bottom: 0;
-        }
-
-        .approved-count {
-          position: relative;
-          top: 0.8rem;
-          left: 4.5rem;
-          font-size: 35px;
-        }
-      }
-
-      @media (max-width: 850px) {
-        .buttonofdashboard {
-          height: 133px;
-          width: 218px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 218px !important;
-        }
-      }
-
-      @media (max-width: 740px) {
-        .buttonofdashboard {
-          height: 153px;
-          width: 280px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 280px !important;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .buttonofdashboard {
-          height: 153px;
-          width: 250px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 250px !important;
-        }
-      }
-
-      @media (max-width: 580px) {
-        .buttonofdashboard {
-          height: 153px;
-          width: 220px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 220px !important;
-        }
-      }
-
-      @media (max-width: 520px) {
-        .buttonofdashboard {
-          height: 153px;
-          width: 206px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 206px !important;
-        }
-      }
-
-      @media (max-width: 492px) {
-        .buttonofdashboard {
-          height: 153px;
-          width: 190px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 190px !important;
-        }
-      }
-
-      @media (max-width: 460px) {
-        .buttonofdashboard {
-          height: 153px;
-          width: 174px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 174px !important;
-        }
-
-        .urgent-count {
-          left: 3rem;
-        }
-
-        .approved-count {
-          left: 3rem;
-        }
-      }
-
-      @media (max-width: 428px) {
-        .buttonofdashboard {
-          height: 158px;
-          width: 161px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 161px !important;
-        }
-      }
-
-      @media (max-width: 401px) {
-        .buttonofdashboard {
-          height: 158px;
-          width: 250px;
-        }
-
-        .ticket {
-          height: auto;
-          width: 250px !important;
-        }
-
-        #dashboardbuttons div {
-          justify-content: center;
-        }
-
-        #dashboardbuttonsgr div {
-          justify-content: center;
-        }
-
-        #ticketinDashboard div {
-          justify-content: center;
-        }
-
-        .urgent-count {
-          left: 5rem;
-        }
-
-        .approved-count {
-          left: 5rem;
-        }
-      }
-
-      /* Content-writer stop */
-
-      @media (max-width: 340px) {
-        #Username {
-          font-size: medium;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- Navbar with toggle button for offcanvas -->
-    <nav class="navbar navbar-expand-lg navbar-dark" id="navbar">
-      <div class="container-fluid">
-        <button
-          class="btn me-2 uppernavbaricon"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasSidebar"
-          aria-controls="offcanvasSidebar"
-        >
-          <i class="fa-solid fa-bars"></i>
+      <div class="d-flex">
+        <button class="btn me-2 uppernavbaricon">
+          <i class="fa-solid fa-bell"></i>
         </button>
+        <button class="btn me-2 uppernavbaricon">
+          <i class="fa-solid fa-user"></i>
+        </button>
+        <a class="navbar-brand" href="#">Logout</a>
+      </div>
+    </div>
+  </nav>
 
-        <a class="navbar-brand me-auto" href="#" id="Username"
-          >Abhay Narvade (Super Admin)</a
-        >
+  <!-- Offcanvas Sidebar -->
+  <div class="offcanvas offcanvas-start sidebarbody" tabindex="-1" id="offcanvasSidebar"
+    aria-labelledby="offcanvasSidebarLabel">
+    <div class="offcanvas-header text-white">
+      <h2 class="offcanvas-title" id="offcanvasSidebarLabel">Ad Hub</h2>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav nav-pills flex-column mb-auto">
+        <!-- Report Section -->
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center">
+            <span><i class="bx bx-grid-alt me-4"></i> Dashboard</span>
+          </a>
+        </li>
 
-        <div class="d-flex">
-          <button class="btn me-2 uppernavbaricon">
-            <i class="fa-solid fa-bell"></i>
+        <!-- Checklist Section -->
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+            href="#collapseReport" role="button" aria-expanded="false" aria-controls="collapseReport">
+            <span><i class="bx bx-bar-chart-alt-2 me-4"></i>Report</span>
+            <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+          </a>
+          <div class="collapse" id="collapseReport">
+            <ul class="list-unstyled ps-3">
+              <li><a href="#" class="">Work Dashboard</a></li>
+              <li><a href="#" class="">Payout</a></li>
+              <li><a href="#" class="">Unclear Payout</a></li>
+              <li><a href="#" class="">Ticket Data</a></li>
+              <li><a href="#" class="">Activity</a></li>
+              <li><a href="#" class="">Ticket History</a></li>
+              <li><a href="#" class="">userDailyWorkReport</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center">
+            <span><i class="bx bx-user icons me-4"></i>Client</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center">
+            <span><i class="bx bx-conversation me-4"></i>GroupChat</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+            href="#collapseTaskList" role="button" aria-expanded="false" aria-controls="collapseTaskList">
+            <span><i class="bx bx-book-reader icons me-4"></i> TaskList</span>
+            <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+          </a>
+          <div class="collapse" id="collapseTaskList">
+            <ul class="list-unstyled ps-3">
+              <li><a href="#" class="">Tasks List </a></li>
+              <li><a href="#" class="">Custome Task</a></li>
+              <li><a href="#" class="">Task Category</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+            href="#collapseChecklist" role="button" aria-expanded="false" aria-controls="collapseChecklist">
+            <span><i class="bx bxs-message-square-check me-4"></i>
+              Checklist</span>
+            <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+          </a>
+          <div class="collapse" id="collapseChecklist">
+            <ul class="list-unstyled ps-3">
+              <li><a href="#" class="">My CheckList</a></li>
+              <li><a href="#" class="">Reviewer</a></li>
+              <li><a href="#" class="">Head Reviewer</a></li>
+              <li><a href="#" class="">Create CheckList</a></li>
+              <li><a href="#" class="">CheckList Access</a></li>
+              <li><a href="#" class="">One Time CheckList</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+            href="#collapseLeads" role="button" aria-expanded="false" aria-controls="collapseLeads">
+            <span><i class="bx bx-volume-full me-4"></i>Leads</span>
+            <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+          </a>
+          <div class="collapse" id="collapseLeads">
+            <ul class="list-unstyled ps-3">
+              <li><a href="#" class="">Facebook</a></li>
+              <li><a href="#" class="">Instagram</a></li>
+              <li><a href="#" class="">Access Token</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" role="button" aria-expanded="false"
+            aria-controls="collapseVideos" href="check">
+            <span><i class="bx bxl-windows me-4"></i> SocailMedia</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+            href="#collapsePayment" role="button" aria-expanded="false" aria-controls="collapsePayment">
+            <span><i class="bx bxl-paypal me-4"></i>Payment</span>
+            <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+          </a>
+          <div class="collapse" id="collapsePayment">
+            <ul class="list-unstyled ps-3">
+              <li><a href="#" class="">Boasting Payment</a></li>
+              <li><a href="#" class="">SMC Payment</a></li>
+              <li><a href="#" class="">Payment Mode</a></li>
+              <li><a href="#" class="">GST</a></li>
+              <li><a href="#" class="">Installment Panel</a></li>
+              <li><a href="#" class="">Banking Section</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" role="button" aria-expanded="false"
+            aria-controls="collapseVideos" href="check">
+            <span><i class="bx bx-calendar icons me-4"></i> Calendar-Type</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+            href="#collapsePackage  " role="button" aria-expanded="false" aria-controls="collapsePackage  ">
+            <span><i class="bx bx-package icons me-4"></i>Package</span>
+            <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+          </a>
+          <div class="collapse" id="collapsePackage ">
+            <ul class="list-unstyled ps-3">
+              <li><a href="#" class="">Package Category</a></li>
+              <li><a href="#" class="">Package GST</a></li>
+              <li><a href="#" class="">Package Service</a></li>
+              <li><a href="#" class="">Package </a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" role="button" aria-expanded="false"
+            aria-controls="collapseVideos" href="check">
+            <span><i class="bx bx-food-menu icons me-4"></i> Forms</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" role="button" aria-expanded="false"
+            aria-controls="collapseVideos" href="check">
+            <span><i class="bx bx-id-card icons me-4"></i>KYC</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" role="button" aria-expanded="false"
+            aria-controls="collapseVideos" href="check">
+            <span><i class="bx bx-group icons me-4"></i>Users</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" role="button" aria-expanded="false"
+            aria-controls="collapseVideos" href="check">
+            <span><i class="bx bx-key icons me-4"></i>Role</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" role="button" aria-expanded="false"
+            aria-controls="collapseVideos" href="check">
+            <span><i class="bx bx-cog icons me-4"></i>Setting</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+            href="#collapseBranches" role="button" aria-expanded="false" aria-controls="collapseBranches">
+            <span><i class="bx bx-git-branch me-4"></i>Branches</span>
+            <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
+          </a>
+          <div class="collapse" id="collapseBranches">
+            <ul class="list-unstyled ps-3">
+              <li><a href="#" class="">Client Branches</a></li>
+              <li><a href="#" class="">Client Payment</a></li>
+              <li><a href="#" class="">Branch Leads</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="container-fluid mt-4">
+    <div class="row flex-wrap justify-content-center align-items-center px-2">
+      <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="Content-writer">
+        <div class="d-flex flex-wrap align-items-center h-100">
+          <div class="d-flex">
+            <span class="usertype">Content Writer</span>
+          </div>
+          <div class="d-flex seconddiv gap-2">
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row flex-wrap justify-content-center align-items-center my-2 px-2">
+      <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="dashboardbuttons">
+        <div class="d-flex flex-wrap align-items-center h-100 py-4">
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Urgent">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Urgent</span>
+              <span><i class="fas fa-exclamation-circle"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
           </button>
-          <button class="btn me-2 uppernavbaricon">
-            <i class="fa-solid fa-user"></i>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Changes">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Changes</span>
+              <span><i class="fas fa-sync-alt fa-spin"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
           </button>
-          <a class="navbar-brand" href="#">Logout</a>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Rewrite">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Rewrite</span>
+              <span><i class="fas fa-random" style="font-size: 22px"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Reassigned">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Reassigned</span>
+              <span><i class="fas fa fa-upload"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Today">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Today</span>
+              <span><i class="far fa-calendar-alt"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Inreview">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">In Review</span>
+              <span><i class="fa-solid fa-check-to-slot"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Approvedbyhead">
+            <div class="d-flex justify-content-between mt-2">
+              <span class="text-start" style="font-size: larger">Approved by Head</span>
+              <span><i class="fas fa-user-check"></i></span>
+            </div>
+            <span class="approved-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Sendtoclient">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Send to Client</span>
+              <span><i class="fa-regular fa-thumbs-up"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Finaldone">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Final Done</span>
+              <span><i class="fas fa-check-circle"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Advanced">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Advanced</span>
+              <span><i class="fas fa-arrow-up"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Hold">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Hold</span>
+              <span><i class="fas fa-pause"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="All">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">All</span>
+              <span><i class="fa fa-arrows"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
         </div>
-      </div>
-    </nav>
-
-    <!-- Offcanvas Sidebar -->
-    <div
-      class="offcanvas offcanvas-start sidebarbody"
-      tabindex="-1"
-      id="offcanvasSidebar"
-      aria-labelledby="offcanvasSidebarLabel"
-    >
-      <div class="offcanvas-header text-white">
-        <h2 class="offcanvas-title" id="offcanvasSidebarLabel">Ad Hub</h2>
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <ul class="nav nav-pills flex-column mb-auto">
-          <!-- Report Section -->
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-            >
-              <span><i class="bx bx-grid-alt me-4"></i> Dashboard</span>
-            </a>
-          </li>
-
-          <!-- Checklist Section -->
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              data-bs-toggle="collapse"
-              href="#collapseReport"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseReport"
-            >
-              <span><i class="bx bx-bar-chart-alt-2 me-4"></i>Report</span>
-              <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
-            </a>
-            <div class="collapse" id="collapseReport">
-              <ul class="list-unstyled ps-3">
-                <li><a href="#" class="">Work Dashboard</a></li>
-                <li><a href="#" class="">Payout</a></li>
-                <li><a href="#" class="">Unclear Payout</a></li>
-                <li><a href="#" class="">Ticket Data</a></li>
-                <li><a href="#" class="">Activity</a></li>
-                <li><a href="#" class="">Ticket History</a></li>
-                <li><a href="#" class="">userDailyWorkReport</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-            >
-              <span><i class="bx bx-user icons me-4"></i>Client</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-            >
-              <span><i class="bx bx-conversation me-4"></i>GroupChat</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              data-bs-toggle="collapse"
-              href="#collapseTaskList"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseTaskList"
-            >
-              <span><i class="bx bx-book-reader icons me-4"></i> TaskList</span>
-              <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
-            </a>
-            <div class="collapse" id="collapseTaskList">
-              <ul class="list-unstyled ps-3">
-                <li><a href="#" class="">Tasks List </a></li>
-                <li><a href="#" class="">Custome Task</a></li>
-                <li><a href="#" class="">Task Category</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              data-bs-toggle="collapse"
-              href="#collapseChecklist"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseChecklist"
-            >
-              <span
-                ><i class="bx bxs-message-square-check me-4"></i>
-                Checklist</span
-              >
-              <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
-            </a>
-            <div class="collapse" id="collapseChecklist">
-              <ul class="list-unstyled ps-3">
-                <li><a href="#" class="">My CheckList</a></li>
-                <li><a href="#" class="">Reviewer</a></li>
-                <li><a href="#" class="">Head Reviewer</a></li>
-                <li><a href="#" class="">Create CheckList</a></li>
-                <li><a href="#" class="">CheckList Access</a></li>
-                <li><a href="#" class="">One Time CheckList</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              data-bs-toggle="collapse"
-              href="#collapseLeads"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseLeads"
-            >
-              <span><i class="bx bx-volume-full me-4"></i>Leads</span>
-              <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
-            </a>
-            <div class="collapse" id="collapseLeads">
-              <ul class="list-unstyled ps-3">
-                <li><a href="#" class="">Facebook</a></li>
-                <li><a href="#" class="">Instagram</a></li>
-                <li><a href="#" class="">Access Token</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseVideos"
-              href="check"
-            >
-              <span><i class="bx bxl-windows me-4"></i> SocailMedia</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              data-bs-toggle="collapse"
-              href="#collapsePayment"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapsePayment"
-            >
-              <span><i class="bx bxl-paypal me-4"></i>Payment</span>
-              <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
-            </a>
-            <div class="collapse" id="collapsePayment">
-              <ul class="list-unstyled ps-3">
-                <li><a href="#" class="">Boasting Payment</a></li>
-                <li><a href="#" class="">SMC Payment</a></li>
-                <li><a href="#" class="">Payment Mode</a></li>
-                <li><a href="#" class="">GST</a></li>
-                <li><a href="#" class="">Installment Panel</a></li>
-                <li><a href="#" class="">Banking Section</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseVideos"
-              href="check"
-            >
-              <span
-                ><i class="bx bx-calendar icons me-4"></i> Calendar-Type</span
-              >
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              data-bs-toggle="collapse"
-              href="#collapsePayment"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapsePayment"
-            >
-              <span><i class="bx bx-package icons me-4"></i>Package</span>
-              <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
-            </a>
-            <div class="collapse" id="collapsePayment">
-              <ul class="list-unstyled ps-3">
-                <li><a href="#" class="">Package Category</a></li>
-                <li><a href="#" class="">Package GST</a></li>
-                <li><a href="#" class="">Package Service</a></li>
-                <li><a href="#" class="">Package </a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseVideos"
-              href="check"
-            >
-              <span><i class="bx bx-food-menu icons me-4"></i> Forms</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseVideos"
-              href="check"
-            >
-              <span><i class="bx bx-id-card icons me-4"></i>KYC</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseVideos"
-              href="check"
-            >
-              <span><i class="bx bx-group icons me-4"></i>Users</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseVideos"
-              href="check"
-            >
-              <span><i class="bx bx-key icons me-4"></i>Role</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseVideos"
-              href="check"
-            >
-              <span><i class="bx bx-cog icons me-4"></i>Setting</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a
-              class="nav-link d-flex justify-content-between align-items-center"
-              data-bs-toggle="collapse"
-              href="#collapseBranches"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseBranches"
-            >
-              <span><i class="bx bx-git-branch me-4"></i>Branches</span>
-              <i class="fa-solid fa-caret-down rotate-icon down-arraow"></i>
-            </a>
-            <div class="collapse" id="collapseBranches">
-              <ul class="list-unstyled ps-3">
-                <li><a href="#" class="">Client Branches</a></li>
-                <li><a href="#" class="">Client Payment</a></li>
-                <li><a href="#" class="">Branch Leads</a></li>
-              </ul>
-            </div>
-          </li>
-        </ul>
       </div>
     </div>
-
-    <!-- Main Content Area -->
-    <div class="container-fluid mt-4">
-      <div class="row flex-wrap justify-content-center align-items-center px-2">
-        <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="Content-writer">
-          <div class="d-flex flex-wrap align-items-center h-100">
-            <div class="d-flex">
-              <span class="usertype">Content Writer</span>
-            </div>
-            <div class="d-flex seconddiv gap-2">
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-          </div>
+    <div class="row flex-wrap justify-content-center align-items-center my-2 px-2">
+      <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="ticketinDashboard">
+        <div class="d-flex flex-wrap align-items-center h-100 py-4">
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
+                Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
         </div>
       </div>
-      <div
-        class="row flex-wrap justify-content-center align-items-center my-2 px-2"
-      >
-        <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="dashboardbuttons">
-          <div class="d-flex flex-wrap align-items-center h-100 py-4">
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Urgent"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Urgent</span>
-                <span><i class="fas fa-exclamation-circle"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Changes"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Changes</span>
-                <span><i class="fas fa-sync-alt fa-spin"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Rewrite"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Rewrite</span>
-                <span
-                  ><i class="fas fa-random" style="font-size: 22px"></i
-                ></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Reassigned"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Reassigned</span>
-                <span><i class="fas fa fa-upload"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Today"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Today</span>
-                <span><i class="far fa-calendar-alt"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Inreview"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">In Review</span>
-                <span><i class="fa-solid fa-check-to-slot"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Approvedbyhead"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span class="text-start" style="font-size: larger"
-                  >Approved by Head</span
-                >
-                <span><i class="fas fa-user-check"></i></span>
-              </div>
-              <span class="approved-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Sendtoclient"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Send to Client</span>
-                <span><i class="fa-regular fa-thumbs-up"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Finaldone"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Final Done</span>
-                <span><i class="fas fa-check-circle"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Advanced"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Advanced</span>
-                <span><i class="fas fa-arrow-up"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Hold"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Hold</span>
-                <span><i class="fas fa-pause"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button class="btn buttonofdashboard text-white mx-3 my-2" id="All">
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">All</span>
-                <span><i class="fa fa-arrows"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
+    </div>
+  </div>
+
+  <div class="container-fluid mt-4">
+    <div class="row flex-wrap justify-content-center align-items-center px-2">
+      <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="Content-writer">
+        <div class="d-flex flex-wrap align-items-center h-100">
+          <div class="d-flex">
+            <span class="usertype">Graphic Designer</span>
           </div>
-        </div>
-      </div>
-      <div
-        class="row flex-wrap justify-content-center align-items-center my-2 px-2"
-      >
-        <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="ticketinDashboard">
-          <div class="d-flex flex-wrap align-items-center h-100 py-4">
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
-                  Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
+          <div class="d-flex seconddiv gap-2">
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="container-fluid mt-4">
-      <div class="row flex-wrap justify-content-center align-items-center px-2">
-        <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="Content-writer">
-          <div class="d-flex flex-wrap align-items-center h-100">
-            <div class="d-flex">
-              <span class="usertype">Graphic Designer</span>
+    <div class="row flex-wrap justify-content-center align-items-center my-2 px-2">
+      <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="dashboardbuttonsgr">
+        <div class="d-flex flex-wrap align-items-center h-100 py-4">
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Urgent-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Urgent</span>
+              <span><i class="fas fa-exclamation-circle"></i></span>
             </div>
-            <div class="d-flex seconddiv gap-2">
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Changes-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Changes</span>
+              <span><i class="fas fa-sync-alt fa-spin"></i></span>
             </div>
-          </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Redesign-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Redesign</span>
+              <span><i class="fas fa-random" style="font-size: 22px"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Reassigned-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Reassigned</span>
+              <span><i class="fas fa fa-upload"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Today-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Today</span>
+              <span><i class="far fa-calendar-alt"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Inreview-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">In Review</span>
+              <span><i class="fa-solid fa-check-to-slot"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Approvedbyhead-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span class="text-start" style="font-size: larger">Approved by Head</span>
+              <span><i class="fas fa-user-check"></i></span>
+            </div>
+            <span class="approved-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Sendtoclient-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Send to Client</span>
+              <span><i class="fa-regular fa-thumbs-up"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Finaldone-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Final Done</span>
+              <span><i class="fas fa-check-circle"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Advanced-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Advanced</span>
+              <span><i class="fas fa-arrow-up"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Hold-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Hold</span>
+              <span><i class="fas fa-pause"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="All-gr">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">All</span>
+              <span><i class="fa fa-arrows"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
         </div>
       </div>
-      <div
-        class="row flex-wrap justify-content-center align-items-center my-2 px-2"
-      >
-        <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="dashboardbuttonsgr">
-          <div class="d-flex flex-wrap align-items-center h-100 py-4">
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Urgent-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Urgent</span>
-                <span><i class="fas fa-exclamation-circle"></i></span>
+    </div>
+    <div class="row flex-wrap justify-content-center align-items-center my-2 px-2">
+      <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="ticketinDashboard">
+        <div class="d-flex flex-wrap align-items-center h-100 py-4">
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Changes-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Changes</span>
-                <span><i class="fas fa-sync-alt fa-spin"></i></span>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
             </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Redesign-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Redesign</span>
-                <span
-                  ><i class="fas fa-random" style="font-size: 22px"></i
-                ></span>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Reassigned-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Reassigned</span>
-                <span><i class="fas fa fa-upload"></i></span>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
             </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Today-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Today</span>
-                <span><i class="far fa-calendar-alt"></i></span>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Inreview-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">In Review</span>
-                <span><i class="fa-solid fa-check-to-slot"></i></span>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
             </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Approvedbyhead-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span class="text-start" style="font-size: larger"
-                  >Approved by Head</span
-                >
-                <span><i class="fas fa-user-check"></i></span>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
               </div>
-              <span class="approved-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Sendtoclient-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Send to Client</span>
-                <span><i class="fa-regular fa-thumbs-up"></i></span>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
             </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Finaldone-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Final Done</span>
-                <span><i class="fas fa-check-circle"></i></span>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Advanced-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Advanced</span>
-                <span><i class="fas fa-arrow-up"></i></span>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
             </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Hold-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Hold</span>
-                <span><i class="fas fa-pause"></i></span>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="All-gr"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">All</span>
-                <span><i class="fa fa-arrows"></i></span>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
               </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
             </button>
-          </div>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
+                Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
         </div>
       </div>
-      <div
-        class="row flex-wrap justify-content-center align-items-center my-2 px-2"
-      >
-        <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="ticketinDashboard">
-          <div class="d-flex flex-wrap align-items-center h-100 py-4">
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
-                  Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
+    </div>
+  </div>
+
+  <div class="container-fluid mt-4">
+    <div class="row flex-wrap justify-content-center align-items-center px-2">
+      <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="Content-writer">
+        <div class="d-flex flex-wrap align-items-center h-100">
+          <div class="d-flex">
+            <span class="usertype">Social Media Manager</span>
+          </div>
+          <div class="d-flex seconddiv gap-2">
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+
+            <select class="form-select shadow-none" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="container-fluid mt-4">
-      <div class="row flex-wrap justify-content-center align-items-center px-2">
-        <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="Content-writer">
-          <div class="d-flex flex-wrap align-items-center h-100">
-            <div class="d-flex">
-              <span class="usertype">Social Media Manager</span>
+    <div class="row flex-wrap justify-content-center align-items-center my-2 px-2">
+      <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="dashboardbuttons">
+        <div class="d-flex flex-wrap align-items-center h-100 py-4">
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Priority-smm">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Priority</span>
+              <span><i class="fas fa-undo-alt"></i></span>
             </div>
-            <div class="d-flex seconddiv gap-2">
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-
-              <select
-                class="form-select shadow-none"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Cr-Changes-smm">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Cr-Changes</span>
+              <span><i class="fas fa-thumbs-up"></i></span>
             </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row flex-wrap justify-content-center align-items-center my-2 px-2"
-      >
-        <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="dashboardbuttons">
-          <div class="d-flex flex-wrap align-items-center h-100 py-4">
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Priority-smm"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Priority</span>
-                <span><i class="fas fa-undo-alt"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Cr-Changes-smm"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Cr-Changes</span>
-                <span><i class="fas fa-thumbs-up"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Gr-Changes-smm"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Gr-Changes</span>
-                <span><i class="fas fa-pause"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Today-smm"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Today</span>
-                <span><i class="fas fa-paper-plane"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="System-smm"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">System</span>
-                <span><i class="fas fa-check-circle"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Advanced-smm"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Advanced</span>
-                <span><i class="fas fa-exchange-alt"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Manual-smm"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span class="text-start" style="font-size: larger">Manual</span>
-                <span><i class="fas fa-arrow-up"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-            <button
-              class="btn buttonofdashboard text-white mx-3 my-2"
-              id="Sendtoclient-smm"
-            >
-              <div class="d-flex justify-content-between mt-2">
-                <span style="font-size: larger">Send to Client</span>
-                <span><i class="fas fa-pause"></i></span>
-              </div>
-              <span class="urgent-count">5</span>
-              <div class="buttonunderline my-2"></div>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div
-        class="row flex-wrap justify-content-center align-items-center my-2 px-2"
-      >
-        <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="ticketinDashboard">
-          <div class="d-flex flex-wrap align-items-center h-100 py-4">
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
-                  Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-            <a href="" class="mx-3 my-2 ticket">
-              <button class="btn ticket-btn text-dark">
-                <div class="ticketimage d-flex justify-content-center">
-                  <img src="gaeneshji.jpg" alt="" class="button-image" />
-                </div>
-                <div class="ticketcontent py-2">
-                  Shiveneri Amrutul Shiveneri Amrutul
-                  <br />
-                  1420
-                  <br />
-                  23-08-2024
-                  <br />
-                  taskname
-                </div>
-              </button>
-            </a>
-          </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Gr-Changes-smm">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Gr-Changes</span>
+              <span><i class="fas fa-pause"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Today-smm">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Today</span>
+              <span><i class="fas fa-paper-plane"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="System-smm">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">System</span>
+              <span><i class="fas fa-check-circle"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Advanced-smm">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Advanced</span>
+              <span><i class="fas fa-exchange-alt"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Manual-smm">
+            <div class="d-flex justify-content-between mt-2">
+              <span class="text-start" style="font-size: larger">Manual</span>
+              <span><i class="fas fa-arrow-up"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
+          <button class="btn buttonofdashboard text-white mx-3 my-2" id="Sendtoclient-smm">
+            <div class="d-flex justify-content-between mt-2">
+              <span style="font-size: larger">Send to Client</span>
+              <span><i class="fas fa-pause"></i></span>
+            </div>
+            <span class="urgent-count">5</span>
+            <div class="buttonunderline my-2"></div>
+          </button>
         </div>
       </div>
     </div>
+    <div class="row flex-wrap justify-content-center align-items-center my-2 px-2">
+      <div class="col-lg-10 col-md-10 col-sm-12 mx-5" id="ticketinDashboard">
+        <div class="d-flex flex-wrap align-items-center h-100 py-4">
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
+                Shiveneri Amrutul Shiveneri Amrutul Shiveneri Amrutul
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+          <a href="" class="mx-3 my-2 ticket">
+            <button class="btn ticket-btn text-dark">
+              <div class="ticketimage d-flex justify-content-center">
+                <img src="gaeneshji.jpg" alt="" class="button-image" />
+              </div>
+              <div class="ticketcontent py-2">
+                Shiveneri Amrutul Shiveneri Amrutul
+                <br />
+                1420
+                <br />
+                23-08-2024
+                <br />
+                taskname
+              </div>
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      // JavaScript to rotate caret icon when collapse is shown or hidden
-      document
-        .querySelectorAll('.nav-link[data-bs-toggle="collapse"]')
-        .forEach((link) => {
-          link.addEventListener("click", function () {
-            const icon = this.querySelector(".rotate-icon");
-            const collapse = document.querySelector(this.getAttribute("href"));
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script>
+    // JavaScript to rotate caret icon when collapse is shown or hidden
+    document
+      .querySelectorAll('.nav-link[data-bs-toggle="collapse"]')
+      .forEach((link) => {
+        link.addEventListener("click", function () {
+          const icon = this.querySelector(".rotate-icon");
+          const collapse = document.querySelector(this.getAttribute("href"));
 
-            collapse.addEventListener("show.bs.collapse", () => {
-              icon.classList.add("rotate");
-            });
+          collapse.addEventListener("show.bs.collapse", () => {
+            icon.classList.add("rotate");
+          });
 
-            collapse.addEventListener("hide.bs.collapse", () => {
-              icon.classList.remove("rotate");
-            });
+          collapse.addEventListener("hide.bs.collapse", () => {
+            icon.classList.remove("rotate");
           });
         });
-    </script>
-  </body>
+      });
+  </script>
+</body>
+
 </html>
